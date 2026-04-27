@@ -23,10 +23,15 @@ public class PageFirst {
     }
 
     @PostMapping("/create")
-    public String createCandidate(String nameCandidate) {
-        System.out.println("Nome do Candidato: " + nameCandidate);
+    public String createCandidate(Candidate candidate) {
+        System.out.println("Nome do Candidato: " + candidate.name);
+        System.out.println("Email do Candidato: " + candidate.email);
+        System.out.println("Password do Candidato: " + candidate.password);
 
-        return "modules/candidate/candidate-login";
+        return "redirect:/home";
+    }
+
+    record Candidate(String name, String email, String password) {
     }
 
 }

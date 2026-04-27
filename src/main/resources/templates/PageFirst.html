@@ -8,12 +8,19 @@
 </head>
 
 <body>
-    <p th:text="${message}"></p>
-    <br>
 
-    <form method="post" th:action="@{/create}">
+    <form method="post" th:action="@{/create}" th:object="${candidate}">
         <label>Nome:</label>
-        <input type="text" name="nameCandidate" id="nameCandidate">
+        <input type="text" name="name" id="name">
+        <br>
+
+        <label>Email:</label>
+        <input type="email" name="email" id="email">
+        <br>
+
+        <label>Password:</label>
+        <input type="password" name="password" id="password">
+        <br>
 
         <button>Cadastra Candidato</button>
 
