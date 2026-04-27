@@ -9,6 +9,15 @@
 
 <body>
     <p th:text="${message}"></p>
+    <br>
+
+    <form method="post" th:action="@{/create}">
+        <label>Nome:</label>
+        <input type="text" name="nameCandidate" id="nameCandidate">
+
+        <button>Cadastra Candidato</button>
+
+    </form>
 </body>
 
 </html>

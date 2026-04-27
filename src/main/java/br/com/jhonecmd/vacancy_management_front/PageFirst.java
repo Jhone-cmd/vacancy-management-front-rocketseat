@@ -3,6 +3,7 @@ package br.com.jhonecmd.vacancy_management_front;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -18,6 +19,13 @@ public class PageFirst {
 
     @GetMapping("/login")
     public String LoginCandidate() {
+        return "modules/candidate/candidate-login";
+    }
+
+    @PostMapping("/create")
+    public String createCandidate(String nameCandidate) {
+        System.out.println("Nome do Candidato: " + nameCandidate);
+
         return "modules/candidate/candidate-login";
     }
 
