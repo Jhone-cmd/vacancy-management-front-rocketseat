@@ -19,16 +19,15 @@ public class PageFirst {
 
     @GetMapping("/login")
     public String LoginCandidate() {
-        return "modules/candidate/candidate-login";
+        return "modules/candidate/login";
     }
 
     @PostMapping("/create")
-    public String createCandidate(Candidate candidate) {
-        System.out.println("Nome do Candidato: " + candidate.name);
-        System.out.println("Email do Candidato: " + candidate.email);
-        System.out.println("Password do Candidato: " + candidate.password);
+    public String createCandidate(Model model, Candidate candidate) {
 
-        return "redirect:/home";
+        model.addAttribute(candidate);
+
+        return "modules/candidate/info";
     }
 
     record Candidate(String name, String email, String password) {
