@@ -4,18 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Candidate Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Login do Candidato</title>
 </head>
 
-<body>
-    <p>Candidate Login</p>
-    <form method="post">
-        <label>Email:</label>
-        <input type="email" name="email" id="email">
-        <br>
-        <label>Password</label>
-        <input type="password" name="password" id="password">
-
+<body class="bg-gray-800 h-screen items-center flex justify-center">
+    <form action="" class="flex gap-24">
+        <div class="text-white max-w-100 text-6xl flex items-center">
+            Vacancy Management
+        </div>
+        <div class="space-y-8 bg-zinc-700 rounded-md p-20">
+            <input type="email" name="email"
+                class="bg-gray-50 text-gray-900 text-xd rounded w-96 block p-4 focus:outline-none focus:ring-green-600 focus:ring-2"
+                placeholder="Email">
+            <input type="password" name="password"
+                class="bg-gray-50 text-gray-900 text-xd rounded w-96 block p-4 focus:outline-none focus:ring-green-600 focus:ring-2"
+                placeholder="Password">
+            <button class="bg-green-900 w-96 p-4 rounded text-white font-bold hover:bg-green-700">Entrar</button>
+            <a href=""
+                class="block text-center font-semibold text-green-700 underline underline-offset-2 hover:text-green-600">Crie
+                sua conta</a>
+        </div>
     </form>
 </body>
 
