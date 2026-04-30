@@ -1,5 +1,6 @@
 package br.com.jhonecmd.vacancy_management_front;
 
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +24,7 @@ public class PageFirst {
     }
 
     @PostMapping("/create")
-    public String createCandidate(Model model, Candidate candidate) {
+    public String createCandidate(Model model, @NonNull Candidate candidate) {
 
         model.addAttribute(candidate);
 
