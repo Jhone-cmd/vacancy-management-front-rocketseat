@@ -23,7 +23,7 @@ public class CandidateController {
         return "modules/candidate/login";
     }
 
-    @PostMapping("/singIn")
+    @PostMapping("/profile")
     public String singIn(RedirectAttributes redirectAttributes, String email, String password) {
         try {
 
