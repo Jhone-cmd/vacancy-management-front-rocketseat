@@ -32,13 +32,15 @@ public class CandidateController {
     public String singIn(RedirectAttributes redirectAttributes, HttpSession session, String email, String password) {
         try {
 
-            var token = candidateService.login(email, password);
+            var token = this.candidateService.login(email, password);
             var grants = token.getRoles().stream()
-                    .map(role -> new SimpleGrantedAuthority("ROLE_" + role.toString().toUpperCase())).toList();
+                    .map(role -> new SimpleGrantedAuthority("ROLE_" +
+                            role.toString().toUpperCase()))
+                    .toList();
 
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(null, null, grants);
 
-            auth.setDetails(auth);
+            auth.setDetails(token.getAccess_token());
 
             SecurityContextHolder.getContext().setAuthentication(auth);
             SecurityContext securityContext = SecurityContextHolder.getContext();
