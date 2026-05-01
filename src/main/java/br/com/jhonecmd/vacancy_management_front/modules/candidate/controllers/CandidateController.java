@@ -3,6 +3,7 @@ package br.com.jhonecmd.vacancy_management_front.modules.candidate.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,6 +15,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.jhonecmd.vacancy_management_front.modules.candidate.services.CandidateService;
+import br.com.jhonecmd.vacancy_management_front.modules.candidate.services.ProfileCandidateService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -22,6 +24,9 @@ public class CandidateController {
 
     @Autowired
     private CandidateService candidateService;
+
+    @Autowired
+    private ProfileCandidateService profileCandidateService;
 
     @GetMapping("/login")
     public String LoginCandidate() {
@@ -32,7 +37,7 @@ public class CandidateController {
     public String singIn(RedirectAttributes redirectAttributes, HttpSession session, String email, String password) {
         try {
 
-            var token = this.candidateService.login(email, password);
+            var token = candidateService.login(email, password);
             var grants = token.getRoles().stream()
                     .map(role -> new SimpleGrantedAuthority("ROLE_" +
                             role.toString().toUpperCase()))
@@ -60,6 +65,10 @@ public class CandidateController {
     @GetMapping("/profile")
     @PreAuthorize("hasRole('CANDIDATE')")
     public String profile() {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        var result = profileCandidateService.execute(authentication.getDetails().toString());
+
         return "modules/candidate/profile";
     }
 
