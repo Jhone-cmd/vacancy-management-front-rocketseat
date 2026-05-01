@@ -9,9 +9,11 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import br.com.jhonecmd.vacancy_management_front.modules.candidate.dto.ProfileCandidateDTO;
+
 @Service
 public class ProfileCandidateService {
-    public String execute(@NonNull String token) {
+    public ProfileCandidateDTO execute(@NonNull String token) {
 
         RestTemplate restTemplate = new RestTemplate();
 
@@ -20,11 +22,9 @@ public class ProfileCandidateService {
 
         HttpEntity<Map<String, String>> request = new HttpEntity<>(headers);
 
-        @SuppressWarnings("null")
         var result = restTemplate.exchange("http://localhost:8080/candidates/profile", HttpMethod.GET, request,
-                String.class);
+                ProfileCandidateDTO.class);
 
-        System.out.println(result);
         return result.getBody();
     }
 }
