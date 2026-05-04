@@ -16,6 +16,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.jhonecmd.vacancy_management_front.modules.candidate.services.CandidateService;
+import br.com.jhonecmd.vacancy_management_front.modules.candidate.services.ListJobsService;
 import br.com.jhonecmd.vacancy_management_front.modules.candidate.services.ProfileCandidateService;
 import jakarta.servlet.http.HttpSession;
 
@@ -28,6 +29,9 @@ public class CandidateController {
 
     @Autowired
     private ProfileCandidateService profileCandidateService;
+
+    @Autowired
+    private ListJobsService listJobsService;
 
     @GetMapping("/login")
     public String LoginCandidate() {
@@ -81,9 +85,24 @@ public class CandidateController {
 
     @GetMapping("/jobs")
     @PreAuthorize("hasRole('CANDIDATE')")
-    public String jobs(Model model) {
-        return "modules/candidate/jobs";
+    public String jobs(Model model, String filter) {
 
+        try {
+            System.out.println("filter: " + filter);
+
+            listJobsService.execute(getToken(), filter);
+
+            return "modules/candidate/jobs";
+
+        } catch (HttpClientErrorException ex) {
+            return "redirect:/candidate/login";
+        }
+
+    }
+
+    private String getToken() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getDetails().toString();
     }
 
 }
