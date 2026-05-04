@@ -66,13 +66,17 @@ public class CandidateController {
     @GetMapping("/profile")
     @PreAuthorize("hasRole('CANDIDATE')")
     public String profile(Model model) {
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            var result = profileCandidateService.execute(authentication.getDetails().toString());
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        var result = profileCandidateService.execute(authentication.getDetails().toString());
+            model.addAttribute("candidate", result);
 
-        model.addAttribute("candidate", result);
+            return "modules/candidate/profile";
+        } catch (HttpClientErrorException ex) {
+            return "redirect:/candidate/login";
+        }
 
-        return "modules/candidate/profile";
     }
 
 }
