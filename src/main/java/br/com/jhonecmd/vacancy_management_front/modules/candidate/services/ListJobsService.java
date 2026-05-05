@@ -1,7 +1,9 @@
 package br.com.jhonecmd.vacancy_management_front.modules.candidate.services;
 
+import java.util.List;
 import java.util.Map;
 
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -10,12 +12,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpClientErrorException.Unauthorized;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import br.com.jhonecmd.vacancy_management_front.modules.candidate.dto.ListJobsDTO;
+
 import org.springframework.web.client.RestTemplate;
 
 @Service
 public class ListJobsService {
 
-    public String execute(String token, String filter) {
+    public List<ListJobsDTO> execute(String token, String filter) {
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
@@ -26,9 +31,12 @@ public class ListJobsService {
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString("http://localhost:8080/candidates/jobs")
                 .queryParam("filter", filter);
 
+        ParameterizedTypeReference<List<ListJobsDTO>> responseType = new ParameterizedTypeReference<List<ListJobsDTO>>() {
+        };
+
         try {
             var result = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, request,
-                    String.class);
+                    responseType);
 
             System.out.println(result);
             return result.getBody();

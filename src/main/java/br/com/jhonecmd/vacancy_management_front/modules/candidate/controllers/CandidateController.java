@@ -88,16 +88,15 @@ public class CandidateController {
     public String jobs(Model model, String filter) {
 
         try {
-            System.out.println("filter: " + filter);
 
-            listJobsService.execute(getToken(), filter);
-
-            return "modules/candidate/jobs";
+            var jobs = listJobsService.execute(getToken(), filter);
+            model.addAttribute("jobs", jobs);
 
         } catch (HttpClientErrorException ex) {
             return "redirect:/candidate/login";
         }
 
+        return "modules/candidate/jobs";
     }
 
     private String getToken() {
