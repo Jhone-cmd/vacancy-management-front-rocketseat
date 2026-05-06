@@ -1,5 +1,7 @@
 package br.com.jhonecmd.vacancy_management_front.modules.candidate.controllers;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.com.jhonecmd.vacancy_management_front.modules.candidate.services.ApplyJobService;
 import br.com.jhonecmd.vacancy_management_front.modules.candidate.services.CandidateService;
 import br.com.jhonecmd.vacancy_management_front.modules.candidate.services.ListJobsService;
 import br.com.jhonecmd.vacancy_management_front.modules.candidate.services.ProfileCandidateService;
@@ -32,6 +35,9 @@ public class CandidateController {
 
     @Autowired
     private ListJobsService listJobsService;
+
+    @Autowired
+    private ApplyJobService applyJobService;
 
     @GetMapping("/login")
     public String LoginCandidate() {
@@ -97,6 +103,14 @@ public class CandidateController {
         }
 
         return "modules/candidate/jobs";
+    }
+
+    @PostMapping("/apply/job")
+    @PreAuthorize("hasRole('CANDIDATE')")
+    public String applyJob(UUID jobId) {
+
+        applyJobService.execute(getToken(), jobId);
+        return "redirect:/candidate/jobs";
     }
 
     private String getToken() {

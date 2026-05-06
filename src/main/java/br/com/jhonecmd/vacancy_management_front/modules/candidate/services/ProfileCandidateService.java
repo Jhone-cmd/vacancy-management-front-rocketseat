@@ -16,6 +16,7 @@ import br.com.jhonecmd.vacancy_management_front.modules.candidate.dto.ProfileCan
 
 @Service
 public class ProfileCandidateService {
+
     public ProfileCandidateDTO execute(@NonNull String token) {
 
         RestTemplate restTemplate = new RestTemplate();

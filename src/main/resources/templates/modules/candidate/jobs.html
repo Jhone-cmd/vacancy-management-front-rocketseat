@@ -29,22 +29,26 @@
             <button
                 class="bg-green-600 font-semibold hover:bg-green-500 text-white w-32 p-3 ml-2 rounded">Buscar</button>
         </form>
+        <form th:action="@{/candidate/apply/job}" method="post">
+            <div class="max-w-md mx-auto mt-10">
 
-        <div class="max-w-md mx-auto mt-10">
-            <div th:each="job: ${jobs}" class="text-white bg-gray-800 rounded-lg p-4 mb-4 shadow-md text-justify">
-                <h3 th:text="${job.name}" class="font-bold text-center"></h3>
-                <span th:text="${job.description}" class="font-semibold"></span>
-                <span class="mt-4 block font-bold">Nível</span>
-                <span th:text="${job.level}" class="block font-semibold"></span>
-                <span class="mt-4 block font-bold">Benefícios</span>
-                <span th:text="${job.benefits}" class="block"></span>
+                <div th:each="job: ${jobs}" class="text-white bg-gray-800 rounded-lg p-4 mb-4 shadow-md text-justify">
+                    <input type="hidden" name="jobId" th:value="${job.id}">
+                    <h3 th:text="${job.name}" class="font-bold text-center"></h3>
+                    <span th:text="${job.description}" class="font-semibold"></span>
+                    <span class="mt-4 block font-bold">Nível</span>
+                    <span th:text="${job.level}" class="block font-semibold"></span>
+                    <span class="mt-4 block font-bold">Benefícios</span>
+                    <span th:text="${job.benefits}" class="block"></span>
 
-                <button class="block mx-auto bg-gray-500 hover:bg-gray-400 text-white font-bold py-2 px-4 rounded mt-4">
-                    Aplicar
-                </button>
+                    <button
+                        class="block mx-auto bg-gray-500 hover:bg-gray-400 text-white font-bold py-2 px-4 rounded mt-4">
+                        Aplicar
+                    </button>
 
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 </body>
 
