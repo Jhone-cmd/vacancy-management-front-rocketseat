@@ -44,6 +44,11 @@ public class CandidateController {
         return "modules/candidate/login";
     }
 
+    @GetMapping("/create")
+    public String CreateCandidate() {
+        return "modules/candidate/create";
+    }
+
     @PostMapping("/signIn")
     public String singIn(RedirectAttributes redirectAttributes, HttpSession session, String email, String password) {
         try {

@@ -22,7 +22,6 @@ public class ApplyJobService {
         HttpEntity<UUID> request = new HttpEntity<>(jobId, headers);
 
         var result = restTemplate.postForObject("http://localhost:8080/candidates/apply/job", request, String.class);
-        System.out.println(result);
         return result;
     }
 
