@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.com.jhonecmd.vacancy_management_front.modules.candidate.dto.CreateCandidateDTO;
 import br.com.jhonecmd.vacancy_management_front.modules.candidate.services.ApplyJobService;
 import br.com.jhonecmd.vacancy_management_front.modules.candidate.services.CandidateService;
+import br.com.jhonecmd.vacancy_management_front.modules.candidate.services.CreateCandidateService;
 import br.com.jhonecmd.vacancy_management_front.modules.candidate.services.ListJobsService;
 import br.com.jhonecmd.vacancy_management_front.modules.candidate.services.ProfileCandidateService;
 import jakarta.servlet.http.HttpSession;
@@ -40,6 +41,9 @@ public class CandidateController {
     @Autowired
     private ApplyJobService applyJobService;
 
+    @Autowired
+    private CreateCandidateService createCandidateService;
+
     @GetMapping("/login")
     public String LoginCandidate() {
         return "modules/candidate/login";
@@ -53,7 +57,13 @@ public class CandidateController {
 
     @PostMapping("/create")
     public String save(CreateCandidateDTO candidateDTO, Model model) {
-        System.out.println("email do candidato: " + candidateDTO.getEmail());
+
+        try {
+            createCandidateService.execute(candidateDTO);
+        } catch (HttpClientErrorException ex) {
+            model.addAttribute("error", ex.getLocalizedMessage());
+        }
+
         model.addAttribute("candidate", candidateDTO);
         return "modules/candidate/create";
     }

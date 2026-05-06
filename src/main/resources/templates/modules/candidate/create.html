@@ -36,6 +36,7 @@
                 th:field="*{description}"></textarea>
 
             <div class="flex items-center justify-center">
+                <p class="text-red-500" th:if="${error}" th:text="${error}"></p>
                 <p class="text-red-500 font-semibold hidden" id="password_error">As senhas não conferem</p>
             </div>
 
