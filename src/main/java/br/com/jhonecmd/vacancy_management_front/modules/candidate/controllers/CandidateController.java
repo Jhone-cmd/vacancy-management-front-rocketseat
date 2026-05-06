@@ -23,6 +23,7 @@ import br.com.jhonecmd.vacancy_management_front.modules.candidate.services.Candi
 import br.com.jhonecmd.vacancy_management_front.modules.candidate.services.CreateCandidateService;
 import br.com.jhonecmd.vacancy_management_front.modules.candidate.services.ListJobsService;
 import br.com.jhonecmd.vacancy_management_front.modules.candidate.services.ProfileCandidateService;
+import br.com.jhonecmd.vacancy_management_front.utils.FormatErrorMessage;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -61,7 +62,7 @@ public class CandidateController {
         try {
             createCandidateService.execute(candidateDTO);
         } catch (HttpClientErrorException ex) {
-            model.addAttribute("error", ex.getLocalizedMessage());
+            model.addAttribute("error", FormatErrorMessage.formatErrorMessage(ex.getResponseBodyAsString()));
         }
 
         model.addAttribute("candidate", candidateDTO);
