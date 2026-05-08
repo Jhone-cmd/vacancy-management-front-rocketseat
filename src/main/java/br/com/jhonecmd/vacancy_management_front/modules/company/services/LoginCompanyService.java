@@ -28,7 +28,6 @@ public class LoginCompanyService {
         HttpEntity<Map<String, String>> request = new HttpEntity<>(data, headers);
 
         var result = restTemplate.postForObject("http://localhost:8080/companies/auth", request, Token.class);
-
         return result;
     }
 }

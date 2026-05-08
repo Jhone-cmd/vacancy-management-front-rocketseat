@@ -1,6 +1,7 @@
 package br.com.jhonecmd.vacancy_management_front.modules.company.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -80,5 +81,11 @@ public class CompanyController {
             return "redirect:/company/login";
         }
 
+    }
+
+    @GetMapping("/jobs")
+    @PreAuthorize("hasRole('COMPANY')")
+    public String jobs() {
+        return "modules/company/jobs";
     }
 }

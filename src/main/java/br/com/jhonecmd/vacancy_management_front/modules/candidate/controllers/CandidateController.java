@@ -19,7 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.jhonecmd.vacancy_management_front.modules.candidate.dto.CreateCandidateDTO;
 import br.com.jhonecmd.vacancy_management_front.modules.candidate.services.ApplyJobService;
-import br.com.jhonecmd.vacancy_management_front.modules.candidate.services.CandidateService;
+import br.com.jhonecmd.vacancy_management_front.modules.candidate.services.LoginCandidateService;
 import br.com.jhonecmd.vacancy_management_front.modules.candidate.services.CreateCandidateService;
 import br.com.jhonecmd.vacancy_management_front.modules.candidate.services.ListJobsService;
 import br.com.jhonecmd.vacancy_management_front.modules.candidate.services.ProfileCandidateService;
@@ -31,7 +31,7 @@ import jakarta.servlet.http.HttpSession;
 public class CandidateController {
 
     @Autowired
-    private CandidateService candidateService;
+    private LoginCandidateService loginCandidateService;
 
     @Autowired
     private ProfileCandidateService profileCandidateService;
@@ -73,7 +73,7 @@ public class CandidateController {
     public String singIn(RedirectAttributes redirectAttributes, HttpSession session, String email, String password) {
         try {
 
-            var token = candidateService.login(email, password);
+            var token = loginCandidateService.login(email, password);
             var grants = token.getRoles().stream()
                     .map(role -> new SimpleGrantedAuthority("ROLE_" +
                             role.toString().toUpperCase()))

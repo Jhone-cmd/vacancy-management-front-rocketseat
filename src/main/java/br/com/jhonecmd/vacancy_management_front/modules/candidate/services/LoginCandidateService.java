@@ -12,7 +12,7 @@ import org.springframework.web.client.RestTemplate;
 import br.com.jhonecmd.vacancy_management_front.modules.candidate.dto.Token;
 
 @Service
-public class CandidateService {
+public class LoginCandidateService {
 
     public Token login(String email, String password) {
 
