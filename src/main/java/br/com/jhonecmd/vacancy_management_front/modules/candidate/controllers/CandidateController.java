@@ -45,11 +45,6 @@ public class CandidateController {
     @Autowired
     private CreateCandidateService createCandidateService;
 
-    @GetMapping("/login")
-    public String LoginCandidate() {
-        return "modules/candidate/login";
-    }
-
     @GetMapping("/create")
     public String CreateCandidate(Model model) {
         model.addAttribute("candidate", new CreateCandidateDTO());
@@ -67,6 +62,11 @@ public class CandidateController {
 
         model.addAttribute("candidate", candidateDTO);
         return "modules/candidate/create";
+    }
+
+    @GetMapping("/login")
+    public String LoginCandidate() {
+        return "modules/candidate/login";
     }
 
     @PostMapping("/signIn")

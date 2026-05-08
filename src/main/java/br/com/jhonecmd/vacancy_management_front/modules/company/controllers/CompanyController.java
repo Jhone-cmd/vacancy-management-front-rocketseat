@@ -37,4 +37,9 @@ public class CompanyController {
         model.addAttribute("company", companyDTO);
         return "modules/candidate/create";
     }
+
+    @GetMapping("/login")
+    public String LoginCompany() {
+        return "modules/company/login";
+    }
 }
