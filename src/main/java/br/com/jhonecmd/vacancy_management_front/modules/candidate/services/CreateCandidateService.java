@@ -21,7 +21,6 @@ public class CreateCandidateService {
         HttpEntity<CreateCandidateDTO> request = new HttpEntity<>(candidateDTO);
 
         var result = restTemplate.postForObject("http://localhost:8080/candidates", request, String.class);
-        System.out.println(result);
         return result;
     }
 }
