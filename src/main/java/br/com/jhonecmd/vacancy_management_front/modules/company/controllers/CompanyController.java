@@ -106,14 +106,15 @@ public class CompanyController {
     public String createJob(CreateJobDTO jobs) {
 
         createJobService.execute(getToken(), jobs);
-        return "redirect:/company/jobs";
+        return "redirect:/company/jobs/list";
     }
 
     @GetMapping("/jobs/list")
     @PreAuthorize("hasRole('COMPANY')")
-    public String list() {
+    public String list(Model model) {
+
         var result = listAllJobByCompanyService.execute(getToken());
-        System.out.println(result);
+        model.addAttribute("jobs", result);
         return "modules/company/list";
     }
 

@@ -25,22 +25,24 @@
 
     <p class="text-center mt-4 text-3xl pt-5 font-bold">Listagem de Vagas</p>
     <div class="flex-grow flex pt-10 justify-center">
-        <div class="pb-3 w-9/12 max-w-full text-center">
+        <div class="w-11/12 text-center">
             <table class="w-full bg-gray-300">
                 <thead>
                     <tr class="bg-gray-700 text-white font-bold">
                         <th class="text-center py-2 px-4">ID</th>
+                        <th class="text-center py-2 px-4">Nome</th>
                         <th class="text-center py-2 px-4">Descrição</th>
                         <th class="text-center py-2 px-4">Benefícios</th>
                         <th class="text-center py-2 px-4">Nível</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="bg-gray-300 font-semibold w-full">
-                        <td class="border px-4 py-2">1</td>
-                        <td class="border px-4 py-2">Description</td>
-                        <td class="border px-4 py-2">Benefícios</td>
-                        <td class="border px-4 py-2">Level</td>
+                    <tr th:each="job: ${jobs}" class="bg-gray-300 font-semibold">
+                        <td class="border px-4 py-2" th:text="${job.id}"></td>
+                        <td class="border px-4 py-2" th:text="${job.name}"></td>
+                        <td class="border px-4 py-2" th:text="${job.description}">Description</td>
+                        <td class="border px-4 py-2" th:text="${job.benefits}">Benefícios</td>
+                        <td class="border px-4 py-2" th:text="${job.level}">Level</td>
 
                     </tr>
                 </tbody>
