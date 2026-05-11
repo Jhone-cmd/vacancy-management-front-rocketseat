@@ -6,21 +6,22 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import br.com.jhonecmd.vacancy_management_front.modules.company.dto.CreateCompanyDTO;
+import br.com.jhonecmd.vacancy_management_front.modules.company.dto.CreateJobDTO;
 
 @Service
-public class CreateCompanyService {
+public class CreateJobService {
 
-    public String execute(CreateCompanyDTO companyDTO) {
+    public String execute(String token, CreateJobDTO jobDTO) {
 
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(token);
 
-        HttpEntity<CreateCompanyDTO> request = new HttpEntity<>(companyDTO);
+        HttpEntity<CreateJobDTO> request = new HttpEntity<>(jobDTO, headers);
 
-        var result = restTemplate.postForObject("http://localhost:8080/companies", request, String.class);
+        var result = restTemplate.postForObject("http://localhost:8080/companies/jobs", request, String.class);
         return result;
     }
 }

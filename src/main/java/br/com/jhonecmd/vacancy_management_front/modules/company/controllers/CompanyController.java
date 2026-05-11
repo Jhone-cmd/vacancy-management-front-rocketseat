@@ -6,6 +6,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +16,9 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.jhonecmd.vacancy_management_front.modules.company.dto.CreateCompanyDTO;
+import br.com.jhonecmd.vacancy_management_front.modules.company.dto.CreateJobDTO;
 import br.com.jhonecmd.vacancy_management_front.modules.company.services.CreateCompanyService;
+import br.com.jhonecmd.vacancy_management_front.modules.company.services.CreateJobService;
 import br.com.jhonecmd.vacancy_management_front.modules.company.services.LoginCompanyService;
 import br.com.jhonecmd.vacancy_management_front.utils.FormatErrorMessage;
 import jakarta.servlet.http.HttpSession;
@@ -29,6 +32,9 @@ public class CompanyController {
 
     @Autowired
     private LoginCompanyService loginCompanyService;
+
+    @Autowired
+    private CreateJobService createJobService;
 
     @GetMapping("/create")
     public String CreateCompany(Model model) {
@@ -85,7 +91,23 @@ public class CompanyController {
 
     @GetMapping("/jobs")
     @PreAuthorize("hasRole('COMPANY')")
-    public String jobs() {
+    public String jobs(Model model) {
+
+        model.addAttribute("jobs", new CreateJobDTO());
         return "modules/company/jobs";
     }
+
+    @PostMapping("/jobs")
+    @PreAuthorize("hasRole('COMPANY')")
+    public String createJob(CreateJobDTO jobs) {
+
+        createJobService.execute(getToken(), jobs);
+        return "redirect:/company/jobs";
+    }
+
+    private String getToken() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return authentication.getDetails().toString();
+    }
+
 }
