@@ -19,6 +19,7 @@ import br.com.jhonecmd.vacancy_management_front.modules.company.dto.CreateCompan
 import br.com.jhonecmd.vacancy_management_front.modules.company.dto.CreateJobDTO;
 import br.com.jhonecmd.vacancy_management_front.modules.company.services.CreateCompanyService;
 import br.com.jhonecmd.vacancy_management_front.modules.company.services.CreateJobService;
+import br.com.jhonecmd.vacancy_management_front.modules.company.services.ListAllJobByCompanyService;
 import br.com.jhonecmd.vacancy_management_front.modules.company.services.LoginCompanyService;
 import br.com.jhonecmd.vacancy_management_front.utils.FormatErrorMessage;
 import jakarta.servlet.http.HttpSession;
@@ -35,6 +36,9 @@ public class CompanyController {
 
     @Autowired
     private CreateJobService createJobService;
+
+    @Autowired
+    private ListAllJobByCompanyService listAllJobByCompanyService;
 
     @GetMapping("/create")
     public String CreateCompany(Model model) {
@@ -108,6 +112,8 @@ public class CompanyController {
     @GetMapping("/jobs/list")
     @PreAuthorize("hasRole('COMPANY')")
     public String list() {
+        var result = listAllJobByCompanyService.execute(getToken());
+        System.out.println(result);
         return "modules/company/list";
     }
 
