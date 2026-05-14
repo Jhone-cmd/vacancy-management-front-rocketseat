@@ -23,7 +23,6 @@ import br.com.jhonecmd.vacancy_management_front.modules.company.services.ListAll
 import br.com.jhonecmd.vacancy_management_front.modules.company.services.LoginCompanyService;
 import br.com.jhonecmd.vacancy_management_front.utils.FormatErrorMessage;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/company")
