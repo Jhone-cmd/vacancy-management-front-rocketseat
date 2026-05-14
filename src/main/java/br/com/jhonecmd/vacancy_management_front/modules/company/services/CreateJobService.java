@@ -1,5 +1,6 @@
 package br.com.jhonecmd.vacancy_management_front.modules.company.services;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -11,6 +12,9 @@ import br.com.jhonecmd.vacancy_management_front.modules.company.dto.CreateJobDTO
 @Service
 public class CreateJobService {
 
+    @Value("${api.url}")
+    private String apiUrl;
+
     public String execute(String token, CreateJobDTO jobDTO) {
 
         RestTemplate restTemplate = new RestTemplate();
@@ -21,7 +25,9 @@ public class CreateJobService {
 
         HttpEntity<CreateJobDTO> request = new HttpEntity<>(jobDTO, headers);
 
-        var result = restTemplate.postForObject("http://localhost:8080/companies/jobs", request, String.class);
+        var url = apiUrl.concat("/companies/jobs");
+
+        var result = restTemplate.postForObject(url, request, String.class);
         return result;
     }
 }

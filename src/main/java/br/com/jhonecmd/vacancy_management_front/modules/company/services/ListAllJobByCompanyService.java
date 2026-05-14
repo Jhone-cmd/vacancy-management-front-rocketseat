@@ -2,6 +2,7 @@ package br.com.jhonecmd.vacancy_management_front.modules.company.services;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -14,6 +15,9 @@ import br.com.jhonecmd.vacancy_management_front.modules.company.dto.ListAllJobsD
 @Service
 public class ListAllJobByCompanyService {
 
+    @Value("${api.url}")
+    private String apiUrl;
+
     public List<ListAllJobsDTO> execute(String token) {
         RestTemplate rt = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
@@ -24,7 +28,9 @@ public class ListAllJobByCompanyService {
         ParameterizedTypeReference<List<ListAllJobsDTO>> responseType = new ParameterizedTypeReference<List<ListAllJobsDTO>>() {
         };
 
-        var result = rt.exchange("http://localhost:8080/companies/jobs/list", HttpMethod.GET, httpEntity, responseType);
+        var url = apiUrl.concat("/companies/jobs/list");
+
+        var result = rt.exchange(url, HttpMethod.GET, httpEntity, responseType);
         return result.getBody();
     }
 }
