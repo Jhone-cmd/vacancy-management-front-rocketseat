@@ -23,6 +23,7 @@ import br.com.jhonecmd.vacancy_management_front.modules.company.services.ListAll
 import br.com.jhonecmd.vacancy_management_front.modules.company.services.LoginCompanyService;
 import br.com.jhonecmd.vacancy_management_front.utils.FormatErrorMessage;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/company")
@@ -116,6 +117,17 @@ public class CompanyController {
         var result = listAllJobByCompanyService.execute(getToken());
         model.addAttribute("jobs", result);
         return "modules/company/list";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+
+        SecurityContextHolder.getContext().setAuthentication(null);
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
+        session.setAttribute("token", null);
+
+        return "redirect:/company/login";
     }
 
     private String getToken() {
