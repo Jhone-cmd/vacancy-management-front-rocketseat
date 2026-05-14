@@ -2,6 +2,7 @@ package br.com.jhonecmd.vacancy_management_front.modules.candidate.services;
 
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -17,6 +18,9 @@ import br.com.jhonecmd.vacancy_management_front.modules.candidate.dto.ProfileCan
 @Service
 public class ProfileCandidateService {
 
+    @Value("${api.url}")
+    private String apiUrl;
+
     public ProfileCandidateDTO execute(@NonNull String token) {
 
         RestTemplate restTemplate = new RestTemplate();
@@ -26,8 +30,10 @@ public class ProfileCandidateService {
 
         HttpEntity<Map<String, String>> request = new HttpEntity<>(headers);
 
+        var url = apiUrl.concat("/candidates/profile");
+
         try {
-            var result = restTemplate.exchange("http://localhost:8080/candidates/profile", HttpMethod.GET, request,
+            var result = restTemplate.exchange(url, HttpMethod.GET, request,
                     ProfileCandidateDTO.class);
 
             return result.getBody();

@@ -1,5 +1,6 @@
 package br.com.jhonecmd.vacancy_management_front.modules.candidate.services;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -11,6 +12,9 @@ import br.com.jhonecmd.vacancy_management_front.modules.candidate.dto.CreateCand
 @Service
 public class CreateCandidateService {
 
+    @Value("${api.url}")
+    private String apiUrl;
+
     public String execute(CreateCandidateDTO candidateDTO) {
 
         RestTemplate restTemplate = new RestTemplate();
@@ -20,7 +24,9 @@ public class CreateCandidateService {
 
         HttpEntity<CreateCandidateDTO> request = new HttpEntity<>(candidateDTO);
 
-        var result = restTemplate.postForObject("http://localhost:8080/candidates", request, String.class);
+        var url = apiUrl.concat("/candidates");
+
+        var result = restTemplate.postForObject(url, request, String.class);
         return result;
     }
 }

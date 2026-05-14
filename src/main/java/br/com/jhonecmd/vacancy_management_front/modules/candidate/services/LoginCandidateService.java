@@ -3,6 +3,7 @@ package br.com.jhonecmd.vacancy_management_front.modules.candidate.services;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -13,6 +14,9 @@ import br.com.jhonecmd.vacancy_management_front.modules.candidate.dto.Token;
 
 @Service
 public class LoginCandidateService {
+
+    @Value("${api.url}")
+    private String apiUrl;
 
     public Token login(String email, String password) {
 
@@ -27,7 +31,9 @@ public class LoginCandidateService {
 
         HttpEntity<Map<String, String>> request = new HttpEntity<>(data, headers);
 
-        var result = restTemplate.postForObject("http://localhost:8080/candidates/auth", request, Token.class);
+        var url = apiUrl.concat("/candidates/auth");
+
+        var result = restTemplate.postForObject(url, request, Token.class);
 
         return result;
     }

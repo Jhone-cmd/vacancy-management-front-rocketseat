@@ -3,6 +3,7 @@ package br.com.jhonecmd.vacancy_management_front.modules.candidate.services;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -20,6 +21,9 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class ListJobsService {
 
+    @Value("${api.url}")
+    private String apiUrl;
+
     public List<ListJobsDTO> execute(String token, String filter) {
         RestTemplate restTemplate = new RestTemplate();
 
@@ -28,7 +32,9 @@ public class ListJobsService {
 
         HttpEntity<Map<String, String>> request = new HttpEntity<>(headers);
 
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString("http://localhost:8080/candidates/jobs")
+        var url = apiUrl.concat("/candidates/jobs");
+
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url)
                 .queryParam("filter", filter);
 
         ParameterizedTypeReference<List<ListJobsDTO>> responseType = new ParameterizedTypeReference<List<ListJobsDTO>>() {
